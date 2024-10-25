@@ -1,7 +1,5 @@
 <x-app-layout>
 
-
-
 @section('content')
     <div class="container">
         <h1>Add Customer</h1>
