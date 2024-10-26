@@ -4,23 +4,45 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use PDF;
 
 class CustomerController extends Controller
 {
     public function index(Request $request)
-{
-    // Retrieve the status input
-    $status = $request->input('status');
+    {
+        // $customers = Customer::all();
+        $search = $request->input('search');    
 
-    // Build the query for tickets
-    $tickets = Ticket::with(['customer', 'assignedUser'])
-        ->when($status, function ($query) use ($status) {
-            return $query->where('status', $status);
-        })
-        ->paginate(10);
+        $customers = Customer::when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%");
+        })->paginate(10);
 
-    return view('tickets.index', compact('tickets'));
-}
+        if (request()->has('generate-pdf')) {
+            $search = $request->input('search');
+        
+
+        $customers = Customer::when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%");
+        })->paginate(10);
+               
+
+            return response()->streamDownload(
+                function () use ($customers) {
+                    $pdf = \PDF::loadView('customers.customers-pdf', [
+                        'customers' => $customers   
+                    ]);
+                    echo $pdf->output();
+                },
+                'CustomersList.pdf',
+                [
+                    'Content-Type' => 'application/pdf',
+                ]
+            );
+        
+        }
+    
+        return view('customers.index', compact('customers'));
+    }
 
     public function create()
     {
@@ -69,4 +91,5 @@ class CustomerController extends Controller
         $customer->delete();
         return redirect()->route('customers.index')->with('success', 'Customer deleted successfully.');
     }
+
 }

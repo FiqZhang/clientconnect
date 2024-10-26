@@ -6,8 +6,10 @@
         </div>
     </div>
 
-    <div class="container d-flex align-items-center justify-content-center mt-3 mb-3"><a href="{{ route('tickets.create') }}" class="btn btn-primary">Create Ticket</a></div>
-
+    <div class="container d-flex align-items-center justify-content-center mt-3 mb-3">
+        <a href="{{ route('tickets.create') }}" class="btn btn-primary me-2">Create Ticket</a>
+        <a href="{{ request()->fullUrlWithQuery(['generate-excel' => true]) }}" class="btn btn-primary">Generate Excel</a>
+    </div>
     <form action="{{ route('tickets.index') }}" method="GET" class="mb-4">
         <div class="col">
             <select name="status" class="form-control" onchange="this.form.submit()">
@@ -19,6 +21,21 @@
             </select>
         </div>
     </form>
+    {{-- <form action="{{ route('tickets.index') }}" method="GET" class="mb-4">
+    <label class="font-weight-bold" for="">Bulan</label>
+            <div class="form-group col-md-2">
+                <select class="form-control" name="bulan" onchange="window.document.filter.submit();">
+                    <option value="" selected> Pilih </option>
+                    @foreach ($senaraiBulan as $bulan)
+                        <option value="{{ $bulan->format('m') }}" {{ $bulan->format('m') == (request()->query('bulan')) ? 'selected' : '' }}>
+                            {{ mb_strtoupper($bulan->locale('ms')->translatedFormat('F')) }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+    </form> --}}
+
+   
     
     
     <table class="table">

@@ -8,7 +8,12 @@
                 <h5>Customer Management</h5>
             </div>
         </div>
-        <div class="container d-flex align-items-center justify-content-center mt-3 mb-3"> <a href="{{ route('customers.create') }}" class="btn btn-primary">Add Customer</a></div>
+        <div class="container d-flex align-items-center justify-content-center mt-3 mb-3">
+            <a href="{{ route('customers.create') }}" class="btn btn-primary me-2">Add Customer</a>
+            <a href="{{ request()->fullUrlWithQuery(['generate-pdf' => true]) }}" class="btn btn-primary">Generate PDF</a>
+        </div>
+        
+        
        
         
         @if (session('success'))

@@ -6,6 +6,12 @@ use App\Models\Ticket;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Exports\TicketsExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\CarbonPeriod;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+
 
 class TicketController extends Controller
 {
@@ -13,13 +19,56 @@ class TicketController extends Controller
     {
         $status = $request->input('status');
 
-        $tickets = Ticket::with(['customer', 'assignedUser'])
-        ->when($request->filled('status'), function ($query) use ($request) {
-            $query->where('status', $request->query('status'));
-        })
-        ->paginate(10);;
+        $senaraiBulan = CarbonPeriod::create(
+            Carbon::now()->startOfYear(),
+            '1 month',
+            Carbon::now()->endOfYear(),
+        ); 
 
-        return view('tickets.index', compact('tickets'));
+        // $tickets = Ticket::with(['customer', 'assignedUser'])
+        // ->when($request->filled('status'), function ($query) use ($request) {
+        //     $query->where('status', $request->query('status'))
+        // ->when($request->filled('bulan'), function ($query) {
+        //         $query->whereMonth('created_at', request()->query('bulan'));
+        //     });
+        // })
+        $tickets = Ticket::with(['customer', 'assignedUser'])
+    ->when($request->filled('status'), function ($query) use ($request) {
+        $query->where('status', $request->query('status'));
+    })
+    ->when($request->filled('bulan'), function ($query) {
+        $query->whereMonth('bulan', request()->query('bulan'));
+    })->paginate(10);
+    Log::info('Bulan parameter:', ['bulan' => $request->query('bulan')]);
+
+
+
+  
+       
+        // dd($tickets);
+         if (request()->has('generate-excel')) {
+
+            $tickets = Ticket::with(['customer', 'assignedUser'])
+                ->when($request->filled('status'), function ($query) use ($request) {
+                    $query->where('status', $request->query('status'));
+                })
+                ->paginate(1000);
+
+                return response()->streamDownload(
+                    function () use ($tickets) {
+                        
+                      
+                        echo view('tickets.tickets-csv', compact('tickets'))->render();
+                    },
+                    'tickets-excel.xls',
+                    [
+                        'Content-Type' => 'application/vnd.ms-excel'
+,
+                    ]
+                );
+            }
+
+        return view('tickets.index', compact('tickets','senaraiBulan'));
     }
 
     public function create()
@@ -77,5 +126,10 @@ class TicketController extends Controller
     {
         $ticket->delete();
         return redirect()->route('tickets.index')->with('success', 'Ticket deleted successfully.');
+    }
+
+    public function export()
+    {
+        return Excel::download(new TicketsExport, 'tickets_report.xlsx');
     }
 }

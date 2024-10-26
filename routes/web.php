@@ -9,6 +9,7 @@ use App\Http\Controllers\TicketController;
 
 
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,6 +27,10 @@ Route::middleware('auth')->group(function () {
         'index', 'create', 'store'
     ]);
     Route::resource('tickets', TicketController::class);
+
+    Route::get('/tickets/export', [TicketController::class, 'export'])->name('tickets.export');
+
+
 });
 
 require __DIR__.'/auth.php';
