@@ -7,11 +7,20 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-    public function index()
-    {
-        $customers = Customer::all();
-        return view('customers.index', compact('customers'));
-    }
+    public function index(Request $request)
+{
+    // Retrieve the status input
+    $status = $request->input('status');
+
+    // Build the query for tickets
+    $tickets = Ticket::with(['customer', 'assignedUser'])
+        ->when($status, function ($query) use ($status) {
+            return $query->where('status', $status);
+        })
+        ->paginate(10);
+
+    return view('tickets.index', compact('tickets'));
+}
 
     public function create()
     {

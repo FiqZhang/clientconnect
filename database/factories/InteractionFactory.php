@@ -22,7 +22,7 @@ class InteractionFactory extends Factory
     {
         return [
             'customer_id' => Customer::factory(), // Create a customer if not provided
-            'type' => $this->faker->randomElement(['email', 'phone call', 'meeting']),
+            'type' => $this->faker->randomElement(['email', 'phone_call', 'meeting']),
             'interaction_date' => $this->faker->dateTimeBetween('-30 days', 'now'),
             'notes' => $this->faker->sentence(),
         ];

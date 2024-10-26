@@ -5,7 +5,21 @@
             <h5>Ticket Management</h5>
         </div>
     </div>
+
     <div class="container d-flex align-items-center justify-content-center mt-3 mb-3"><a href="{{ route('tickets.create') }}" class="btn btn-primary">Create Ticket</a></div>
+
+    <form action="{{ route('tickets.index') }}" method="GET" class="mb-4">
+        <div class="col">
+            <select name="status" class="form-control" onchange="this.form.submit()">
+                <option value="">All Status</option>
+                <option value="open" {{ request('status') == 'open' ? 'selected' : '' }}>Open</option>
+                <option value="in_progress" {{ request('status') == 'in_progress' ? 'selected' : '' }}>In Progress</option>
+                <option value="resolved" {{ request('status') == 'resolved' ? 'selected' : '' }}>Resolved</option>
+                <option value="closed" {{ request('status') == 'closed' ? 'selected' : '' }}>Closed</option>
+            </select>
+        </div>
+    </form>
+    
     
     <table class="table">
         <thead>
@@ -41,4 +55,5 @@
         </tbody>
     </table>
 </div>
+{{ $tickets->links() }} 
 </x-app-layout>

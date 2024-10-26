@@ -9,9 +9,16 @@ use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tickets = Ticket::with(['customer', 'assignedUser'])->get();
+        $status = $request->input('status');
+
+        $tickets = Ticket::with(['customer', 'assignedUser'])
+        ->when($request->filled('status'), function ($query) use ($request) {
+            $query->where('status', $request->query('status'));
+        })
+        ->paginate(10);;
+
         return view('tickets.index', compact('tickets'));
     }
 
