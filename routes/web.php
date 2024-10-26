@@ -4,6 +4,10 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InteractionController;
+use App\Http\Controllers\TicketController;
+
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('customers.interactions', InteractionController::class)->only([
         'index', 'create', 'store'
     ]);
+    Route::resource('tickets', TicketController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -21,11 +21,25 @@
                 {{ __('Customer Management') }}
             </h3>
             <p class="text-gray-700 dark:text-gray-300 mt-2">
-                Manage customer information, including names, emails, and contact details.
+                Manage customer information  details.
             </p>
-            <a href="{{ route('customers.index') }}" class="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+            <a href="{{ route('customers.index') }}" class="btn btn-info" style="width: 300px; height: 40px;">
                 Go to Customer Management
             </a>
+            {{-- <a href="{{ route('tickets.index') }}" class="mt-4 inline-block bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
+                Go to Ticket Management
+            </a> --}}
+        </div>
+        <div class="p-6">
+            <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200">
+                {{ __('Ticket Management') }}
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 mt-2">
+                Manage ticket information details.
+            </p>
+            <a href="{{ route('tickets.index') }}" class="btn btn-primary" style="width: 300px; height: 40px;">
+                Go to Ticket Management
+            </a>           
         </div>
     </div>
     <!-- End of Customer Management Card -->
