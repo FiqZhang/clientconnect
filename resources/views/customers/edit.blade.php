@@ -1,6 +1,4 @@
 <x-app-layout>
-
-
     <div class="container">
         <h1>Edit Customer</h1>
         <form action="{{ route('customers.update', $customer) }}" method="POST">

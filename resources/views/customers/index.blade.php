@@ -43,6 +43,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
+                            <a href="{{ route('customers.interactions.index', $customer) }}" class="btn btn-secondary">Interaction Tracking</a>
                         </td>
                     </tr>
                 @endforeach
