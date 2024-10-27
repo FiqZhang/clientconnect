@@ -37,9 +37,9 @@ class TicketController extends Controller
         $query->where('status', $request->query('status'));
     })
     ->when($request->filled('bulan'), function ($query) {
-        $query->whereMonth('bulan', request()->query('bulan'));
+        $query->whereMonth('created_at', request()->query('bulan'));
     })->paginate(10);
-    Log::info('Bulan parameter:', ['bulan' => $request->query('bulan')]);
+   
 
 
 

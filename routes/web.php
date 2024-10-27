@@ -22,15 +22,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('customers', CustomerController::class);
-    Route::resource('customers.interactions', InteractionController::class)->only([
-        'index', 'create', 'store'
-    ]);
-    Route::resource('tickets', TicketController::class);
-
-    Route::get('/tickets/export', [TicketController::class, 'export'])->name('tickets.export');
+    // Route::resource('customers', CustomerController::class);
+    // Route::resource('customers.interactions', InteractionController::class)->only([
+    //     'index', 'create', 'store'
+    // ]);
+    // Route::resource('tickets', TicketController::class);
+    // Route::get('/tickets/export', [TicketController::class, 'export'])->name('tickets.export');
 
 
 });
 
 require __DIR__.'/auth.php';
+require __DIR__.'/customer.php';
+require __DIR__.'/ticket.php';
+
