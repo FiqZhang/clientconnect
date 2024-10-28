@@ -5,6 +5,47 @@
         </h2>
     </x-slot>
 
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-header">Total Customers</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $totalCustomers }}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-header">Pending Follow-Ups</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $pendingFollowUps }}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-header">Active Tickets</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $activeTickets }}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <h4 class="mt-4">Recent Interactions</h4>
+        <ul class="list-group">
+            @foreach ($recentInteractions as $interaction)
+                <li class="list-group-item">
+                    {{ $interaction->notes }} 
+                    <span class="text-muted">({{ $interaction->created_at->format('d M Y') }})</span>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    
+</x-app-layout>
+
     {{-- <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -15,7 +56,7 @@
         </div>
     </div> --}}
      <!-- Customer Management Card -->
-     <div class="mt-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+     {{-- <div class="mt-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6">
             <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200">
                 {{ __('Customer Management') }}
@@ -29,7 +70,7 @@
             {{-- <a href="{{ route('tickets.index') }}" class="mt-4 inline-block bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
                 Go to Ticket Management
             </a> --}}
-        </div>
+        {{-- </div>
         <div class="p-6">
             <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200">
                 {{ __('Ticket Management') }}
@@ -43,5 +84,22 @@
         </div>
     </div>
     <!-- End of Customer Management Card -->
-</div>
-</x-app-layout>
+</div>  --}}
+
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('ticketStatusChart').getContext('2d');
+    var ticketStatusChart = new Chart(ctx, {
+        type: 'pie', // or 'bar', 'doughnut' as preferred
+        data: {
+            labels: {!! json_encode($ticketStatuses->keys()) !!},
+            datasets: [{
+                label: 'Ticket Statuses',
+                data: {!! json_encode($ticketStatuses->values()) !!},
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'], // Add more colors if needed
+            }]
+        },
+    });
+</script>
+@endsection
