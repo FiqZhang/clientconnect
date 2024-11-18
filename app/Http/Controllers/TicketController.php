@@ -128,8 +128,5 @@ class TicketController extends Controller
         return redirect()->route('tickets.index')->with('success', 'Ticket deleted successfully.');
     }
 
-    public function export()
-    {
-        return Excel::download(new TicketsExport, 'tickets_report.xlsx');
-    }
+  
 }

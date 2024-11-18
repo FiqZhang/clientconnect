@@ -6,7 +6,7 @@ use App\Models\Ticket;
 use App\Models\User;
 use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Faker\Factory as Faker; // Import the Faker factory
+use Faker\Factory as Faker; 
 
 class TicketFactory extends Factory
 {
