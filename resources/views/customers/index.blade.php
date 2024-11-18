@@ -9,7 +9,9 @@
             </div>
         </div>
         <div class="container d-flex align-items-center justify-content-center mt-3 mb-3">
+            @if(auth()->user()->role_id == 1)
             <a href="{{ route('customers.create') }}" class="btn btn-primary me-2">Add Customer</a>
+            @endif
             <a href="{{ request()->fullUrlWithQuery(['generate-pdf' => true]) }}" class="btn btn-primary">Generate PDF</a>
         </div>
         

@@ -10,33 +10,37 @@
         <a href="{{ route('tickets.create') }}" class="btn btn-primary me-2">Create Ticket</a>
         <a href="{{ request()->fullUrlWithQuery(['generate-excel' => true]) }}" class="btn btn-primary">Generate Excel</a>
     </div>
-    <form action="{{ route('tickets.index') }}" method="GET" class="mb-4">
-        <div class="col">
-            <select name="status" class="form-control" onchange="this.form.submit()">
-                <option value="">All Status</option>
-                <option value="open" {{ request('status') == 'open' ? 'selected' : '' }}>Open</option>
-                <option value="in_progress" {{ request('status') == 'in_progress' ? 'selected' : '' }}>In Progress</option>
-                <option value="resolved" {{ request('status') == 'resolved' ? 'selected' : '' }}>Resolved</option>
-                <option value="closed" {{ request('status') == 'closed' ? 'selected' : '' }}>Closed</option>
-            </select>
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <form action="{{ route('tickets.index') }}" method="GET" class="mb-4">
+                <div class="form-group">
+                    <label class="font-weight-bold" for=""><strong>Status</strong></label>
+                    <select name="status" class="form-control" onchange="this.form.submit()">
+                        <option value="">All Status</option>
+                        <option value="open" {{ request('status') == 'open' ? 'selected' : '' }}>Open</option>
+                        <option value="in_progress" {{ request('status') == 'in_progress' ? 'selected' : '' }}>In Progress</option>
+                        <option value="resolved" {{ request('status') == 'resolved' ? 'selected' : '' }}>Resolved</option>
+                        <option value="closed" {{ request('status') == 'closed' ? 'selected' : '' }}>Closed</option>
+                    </select>
+                </div>
+            </form>
         </div>
-    </form>
-    {{-- <form action="{{ route('tickets.index') }}" method="GET" class="mb-4">
-    <label class="font-weight-bold" for="">Bulan</label>
-            <div class="form-group col-md-2">
-                <select class="form-control" name="bulan" onchange="window.document.filter.submit();">
-                    <option value="" selected> Pilih </option>
-                    @foreach ($senaraiBulan as $bulan)
-                        <option value="{{ $bulan->format('m') }}" {{ $bulan->format('m') == (request()->query('bulan')) ? 'selected' : '' }}>
-                            {{ mb_strtoupper($bulan->locale('ms')->translatedFormat('F')) }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-    </form> --}}
-
-   
-    
+        <div class="col-md-4">
+            <form action="{{ route('tickets.index') }}" method="GET" class="mb-4">
+            <label class="font-weight-bold" for=""><strong>Month</strong></label>
+                    <div class="form-group">
+                        <select class="form-control" name="bulan" onchange="this.form.submit()">
+                            <option value="" selected> Pilih </option>
+                            @foreach ($senaraiBulan as $bulan)
+                                <option value="{{ $bulan->format('m') }}" {{ $bulan->format('m') == (request()->query('bulan')) ? 'selected' : '' }}>
+                                    {{ mb_strtoupper($bulan->locale('ms')->translatedFormat('F')) }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+            </form>
+        </div>
+    </div>
     
     <table class="table">
         <thead>

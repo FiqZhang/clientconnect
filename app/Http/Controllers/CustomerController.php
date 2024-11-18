@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use PDF;
 
 class CustomerController extends Controller
@@ -46,7 +47,9 @@ class CustomerController extends Controller
 
     public function create()
     {
+        // Gate::authorize('create');
         return view('customers.create');
+
     }
 
     public function store(Request $request)
@@ -67,11 +70,14 @@ class CustomerController extends Controller
 
     public function edit(Customer $customer)
     {
+        
         return view('customers.edit', compact('customer'));
     }
 
     public function update(Request $request, Customer $customer)
     {
+        Gate::authorize('update',$customer);
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:customers,email,' . $customer->id,

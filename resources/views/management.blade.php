@@ -20,9 +20,9 @@
             <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200">
                 {{ __('Customer Management') }}
             </h3>
-            <p class="text-gray-700 dark:text-gray-300 mt-2">
+            {{-- <p class="text-gray-700 dark:text-gray-300 mt-2">
                 Manage customer information  details.
-            </p>
+            </p> --}}
             <a href="{{ route('customers.index') }}" class="btn btn-info" style="width: 300px; height: 40px;">
                 Go to Customer Management
             </a>
@@ -34,9 +34,9 @@
             <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200">
                 {{ __('Ticket Management') }}
             </h3>
-            <p class="text-gray-700 dark:text-gray-300 mt-2">
+            {{-- <p class="text-gray-700 dark:text-gray-300 mt-2">
                 Manage ticket information details.
-            </p>
+            </p> --}}
             <a href="{{ route('tickets.index') }}" class="btn btn-primary" style="width: 300px; height: 40px;">
                 Go to Ticket Management
             </a>           
