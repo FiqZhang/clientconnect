@@ -16,6 +16,8 @@ class Ticket extends Model
         'status',
         'priority',
         'assigned_to',
+        'file_path',
+        'file_name',   
     ];
 
     public function customer()

@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Carbon\CarbonPeriod;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
 {
@@ -87,9 +87,20 @@ class TicketController extends Controller
             'status' => 'required|in:open,in_progress,resolved,closed',
             'priority' => 'required|in:low,medium,high',
             'assigned_to' => 'nullable|exists:users,id',
+            'file' => 'required',
         ]);
 
-        Ticket::create($request->all());
+        $path = $request->file('file')->store('Ticket Files');
+        $file = $request->file('file');
+        $fileName = $file->getClientOriginalName();
+        // dd($path);
+
+        $data = $request->all();
+        $data['file_path'] = $path;
+        $data['file_name'] = $fileName;
+        Ticket::create($data);
+    
+        // Ticket::create($request->all());
 
         return redirect()->route('tickets.index')->with('success', 'Ticket created successfully.');
     }
@@ -103,6 +114,8 @@ class TicketController extends Controller
     {
         $customers = Customer::all();
         $users = User::all();
+        $fileUrl = Storage::url($ticket->file_path); // Generate URL from file path
+
         return view('tickets.edit', compact('ticket', 'customers', 'users'));
     }
 
@@ -127,6 +140,38 @@ class TicketController extends Controller
         $ticket->delete();
         return redirect()->route('tickets.index')->with('success', 'Ticket deleted successfully.');
     }
+
+    public function viewFile($id)
+    {
+        $ticket = Ticket::findOrFail($id);
+
+        // Check if file exists
+        if (!Storage::exists($ticket->file_path)) {
+            abort(404, 'File not found.');
+        }
+
+        else{
+            return Storage::response($ticket->file_path, $ticket->file_name);
+        }
+    }
+
+    public function downloadFile($id)
+    {
+        $ticket = Ticket::findOrFail($id);
+
+        // Check if file exists
+        if (!Storage::exists($ticket->file_path)) {
+            abort(404, 'File not found.');
+            return redirect()->back()->with('error', 'The requested file does not exist.');
+
+        }
+
+        // Return the file as a response
+        else{
+            return Storage::download($ticket->file_path, $ticket->file_name);
+        }
+    }
+
 
   
 }

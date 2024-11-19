@@ -24,7 +24,7 @@ class CustomerController extends Controller
 
         $customers = Customer::when($search, function ($query, $search) {
             return $query->where('name', 'like', "%{$search}%");
-        })->paginate(10);
+        })->get();
                
 
             return response()->streamDownload(
