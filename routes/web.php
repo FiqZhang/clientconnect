@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InteractionController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\DashboardController;
+use App\Jobs\SendMail;
 use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\Mail;
 
@@ -33,7 +34,8 @@ Route::middleware('auth')->group(function () {
         // Mail::raw('hello syafiq', function($message){
         //     $message->to('test@gmail.com')->subject('noreply');
         // });
-        Mail::send(new OrderShipped);
+        // Mail::send(new OrderShipped);
+        SendMail::dispatch();
 
         dd('success');
     });

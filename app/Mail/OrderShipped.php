@@ -40,6 +40,7 @@ class OrderShipped extends Mailable
     {
         return new Content(
             view: 'emails.order-shipped',
+            // view: 'auth.login',
         );
     }
 
