@@ -6,7 +6,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InteractionController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\DashboardController;
-
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,6 +29,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/tickets/{id}/file', [TicketController::class, 'viewFile'])->name('tickets.viewFile');
     Route::get('/tickets/{id}/fileDownload', [TicketController::class, 'downloadFile'])->name('tickets.downloadFile');
+    Route::get('send-mail', function(){
+        // Mail::raw('hello syafiq', function($message){
+        //     $message->to('test@gmail.com')->subject('noreply');
+        // });
+        Mail::send(new OrderShipped);
+
+        dd('success');
+    });
 
     // Route::resource('customers', CustomerController::class);
     // Route::resource('customers.interactions', InteractionController::class)->only([
