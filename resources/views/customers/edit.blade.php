@@ -28,7 +28,9 @@
                 <label for="notes" class="form-label">Notes</label>
                 <textarea name="notes" id="notes" class="form-control" rows="3">{{ $customer->notes }}</textarea>
             </div>
+            @can('update', $customer)
             <button type="submit" class="btn btn-primary">Update Customer</button>
+            @endcan
             <a href="{{ route('customers.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>

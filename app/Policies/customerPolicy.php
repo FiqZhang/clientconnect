@@ -7,7 +7,7 @@ use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class customerPolicy
+class CustomerPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -30,7 +30,7 @@ class customerPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role_id;
+        return $user->role_id == 1;
 
     }
 
@@ -40,6 +40,7 @@ class customerPolicy
     public function update(User $user, Customer $customer): bool
     {
         return $user->role_id == 1;
+
     }
 
     /**
@@ -47,7 +48,7 @@ class customerPolicy
      */
     public function delete(User $user, Customer $customer): bool
     {
-        return $user->role_id;
+        return $user->role_id == 1;
     }
 
     /**

@@ -9,9 +9,9 @@
             </div>
         </div>
         <div class="container d-flex align-items-center justify-content-center mt-3 mb-3">
-            @if(auth()->user()->role_id == 1)
+            @can('create',  App\Models\Customer::class)
             <a href="{{ route('customers.create') }}" class="btn btn-primary me-2">Add Customer</a>
-            @endif
+            @endcan
             <a href="{{ request()->fullUrlWithQuery(['generate-pdf' => true]) }}" class="btn btn-primary">Generate PDF</a>
         </div>
         
@@ -59,7 +59,9 @@
                             <form action="{{ route('customers.destroy', $customer) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
+                                @can('delete', $customer)
                                 <button type="submit" class="btn btn-danger btn-sm mt-1 mb-1">Delete</button>
+                                @endcan
                             </form>
                             <a href="{{ route('customers.interactions.index', $customer) }}" class="btn btn-secondary btn-sm ">Interaction<br>Tracking</a>
                         </td>                        

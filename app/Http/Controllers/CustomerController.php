@@ -11,6 +11,7 @@ class CustomerController extends Controller
 {
     public function index(Request $request)
     {
+       
         // $customers = Customer::all();
         $search = $request->input('search');    
 
