@@ -6,7 +6,7 @@
         @csrf
         <div class="mb-3">
             <label for="customer_id" class="form-label">Customer</label>
-            <select name="customer_id" id="customer_id" class="form-select" >
+            <select name="customer_id" id="customer_id" class="form-select" required>
                 <option value="">Select Customer</option>
                 @foreach ($customers as $customer)
                     <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -15,7 +15,7 @@
         </div>
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" name="title" id="title" class="form-control" >
+            <input type="text" name="title" id="title" class="form-control" required>
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
@@ -23,7 +23,7 @@
         </div>
         <div class="mb-3">
             <label for="status" class="form-label">Status</label>
-            <select name="status" id="status" class="form-select" >
+            <select name="status" id="status" class="form-select" required>
                 <option value="open">Open</option>
                 <option value="in_progress">In Progress</option>
                 <option value="resolved">Resolved</option>
@@ -32,7 +32,7 @@
         </div>
         <div class="mb-3">
             <label for="priority" class="form-label">Priority</label>
-            <select name="priority" id="priority" class="form-select" >
+            <select name="priority" id="priority" class="form-select" required>
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
@@ -40,7 +40,7 @@
         </div>
         <div class="mb-3">
             <label for="assigned_to" class="form-label">Assigned To</label>
-            <select name="assigned_to" id="assigned_to" class="form-select">
+            <select name="assigned_to" id="assigned_to" class="form-select" required>
                 <option value="">Unassigned</option>
                 @foreach ($users as $user)
                     <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -51,7 +51,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="mb-3">
-                    <input type="file" name="file" class="form-control" >
+                    <input type="file" name="file" class="form-control" required >
                 </div>
             </div>
         </div>

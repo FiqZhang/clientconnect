@@ -7,10 +7,13 @@ use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Exports\TicketsExport;
+use App\Mail\CreateTicket;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\CarbonPeriod;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
@@ -91,14 +94,24 @@ class TicketController extends Controller
         ]);
 
         $path = $request->file('file')->store('Ticket Files');
+        $assigned_to = $request->input('assigned_to');
         $file = $request->file('file');
         $fileName = $file->getClientOriginalName();
+        $email = Auth::user()->email;
+        $name = Auth::user()->name;
+        $assigned = User::where('id',$assigned_to)->first();;
+      
+            $assignedName = $assigned->name;
+      
+
+
         // dd($path);
 
         $data = $request->all();
         $data['file_path'] = $path;
         $data['file_name'] = $fileName;
         Ticket::create($data);
+        Mail::to($email)->send(new CreateTicket($name, $data, $assignedName));
     
         // Ticket::create($request->all());
 
