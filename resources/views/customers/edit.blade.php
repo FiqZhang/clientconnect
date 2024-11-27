@@ -1,4 +1,7 @@
 <x-app-layout>
+
+        <!-- Include this where you want the success message to appear -->
+
     <div class="container">
         <h1>Edit Customer</h1>
         <form action="{{ route('customers.update', $customer) }}" method="POST">
@@ -28,11 +31,34 @@
                 <label for="notes" class="form-label">Notes</label>
                 <textarea name="notes" id="notes" class="form-control" rows="3">{{ $customer->notes }}</textarea>
             </div>
+            @if (session('success'))
+        <div id="success-message" class="alert alert-success" style="display: none;">
+            {{ session('success') }}
+        </div>
+    @endif
+
             @can('update', $customer)
             <button type="submit" class="btn btn-primary">Update Customer</button>
             @endcan
             <a href="{{ route('customers.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Check if the success message container exists
+        if ($('#success-message').length) {
+            // Display the message
+            $('#success-message').fadeIn();
+
+            // Auto-hide after 3 seconds (optional)
+            setTimeout(function () {
+                $('#success-message').fadeOut();
+            }, 3000);
+        }
+    });
+</script>
+
 
 </x-app-layout>

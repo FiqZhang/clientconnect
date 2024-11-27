@@ -42,12 +42,7 @@ class TicketController extends Controller
     ->when($request->filled('bulan'), function ($query) {
         $query->whereMonth('created_at', request()->query('bulan'));
     })->paginate(10);
-   
-
-
-
-  
-       
+          
         // dd($tickets);
          if (request()->has('generate-excel')) {
 
@@ -102,9 +97,7 @@ class TicketController extends Controller
         $assigned = User::where('id',$assigned_to)->first();;
       
             $assignedName = $assigned->name;
-      
-
-
+    
         // dd($path);
 
         $data = $request->all();

@@ -1,23 +1,30 @@
 <x-app-layout>
     <x-slot name="header">
+
+        {{-- <div class="mb-3 d-flex justify-content-end" >
+            <a href="{{ route('dashboard','en')}}" class="btn btn-dark me-2">English</a>
+            <a href="{{ route('dashboard','ms')}}" class="btn btn-dark">Malay</a>
+        </div> --}}
+
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('dash.Dashboard') }}
         </h2>
+
     </x-slot>
 
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-4">
                 <div class="card text-white bg-primary mb-3">
-                    <div class="card-header">Total Customers</div>
+                    <div class="card-header">{{ __('dash.Total Customers') }}</div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $totalCustomers }}</h5>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card text-white bg-warning mb-3">
-                    <div class="card-header">Pending Follow-Ups</div>
+                <div class="card text-white bg-secondary mb-3">
+                    <div class="card-header">{{ __('dash.Pending Follow-Ups') }}</div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $pendingFollowUps }}</h5>
                     </div>
@@ -25,7 +32,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card text-white bg-success mb-3">
-                    <div class="card-header">Active Tickets</div>
+                    <div class="card-header">{{ __('dash.Active Tickets') }}</div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $activeTickets }}</h5>
                     </div>
@@ -33,11 +40,14 @@
             </div>
         </div>
     
-        <h4 class="mt-4">Recent Interactions</h4>
+        <h4 class="mt-4"> {{__('dash.Recent Interactions') }}</h4>
         <ul class="list-group">
             @foreach ($recentInteractions as $interaction)
                 <li class="list-group-item">
-                    {{ $interaction->notes }} 
+                    <strong>{{__('dash.Name') }}: </strong> {{ $interaction->customer->name }} 
+                    <div></div>
+                    <strong>{{__('dash.Notes') }}: </strong>{{ $interaction->notes }} 
+                    <div></div>
                     <span class="text-muted">({{ $interaction->created_at->format('d M Y') }})</span>
                 </li>
             @endforeach

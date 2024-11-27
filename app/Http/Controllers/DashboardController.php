@@ -6,14 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Interaction;
 use App\Models\Ticket;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
     public function index()
     {
+        // App::setLocale($locale);
+        
         $totalCustomers = Customer::count();
-        $recentInteractions = Interaction::latest()->take(5)->get(); // Adjust as needed
+        $recentInteractions = Interaction::latest()
+        ->with('customer')
+        ->take(5)
+        ->get(); 
         $pendingFollowUps = Ticket::where('status', 'in_progress')->count();
         $activeTickets = Ticket::where('status', 'open')->count();
         $ticketStatuses = Ticket::select('status', DB::raw('count(*) as count'))
@@ -29,6 +36,19 @@ class DashboardController extends Controller
         ));
 
     }
-      
+
+    // public function change(Request $request)
+    // {
+    //     $lang = $request->lang;
+
+    //     if (!in_array($lang, ['en', 'ms'])) {
+    //         abort(400);
+    //     }
+
+    //     Session::put('locale', $lang);
+
+    //     return redirect()->back();
+    // }
+
 }
 

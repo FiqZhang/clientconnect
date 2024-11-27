@@ -1,6 +1,6 @@
 
 <x-app-layout>
-    <div class="container-fluid">
+    <div class="container-fluid" style="max-width: 1400px; margin: 0 auto;">
      
         
         <div class="container d-flex align-items-center justify-content-center mt-3" >
@@ -14,13 +14,6 @@
             @endcan
             <a href="{{ request()->fullUrlWithQuery(['generate-pdf' => true]) }}" class="btn btn-primary">Generate PDF</a>
         </div>
-        
-        
-       
-        
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
 
         <form action="{{ route('customers.index') }}">
         <div class="row mb-3">
@@ -70,6 +63,13 @@
             </tbody>
         </table>
     </div>
-    {{ $customers->links() }} <!-- Pagination links -->
+      
+    <div class="container">
+        <div class="row justify-content-center ">
+          <div class="col-3">
+            <div class="p-3 border bg-light">{{ $customers->links('pagination::bootstrap-5') }}</div>
+          </div>
+        </div>
+      </div>
 
 </x-app-layout>

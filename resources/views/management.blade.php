@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Management') }}
+            {{ __('nav_lang.Management') }}
         </h2>
     </x-slot>
 
@@ -15,33 +15,33 @@
         </div>
     </div> --}}
      <!-- Customer Management Card -->
+ <div class="container-fluid d-flex justify-content-center align-items-center " style="max-width: 1400px; margin: 0 auto;">
      <div class="mt-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-        <div class="p-6">
+        <div class="p-6 " >
             <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200">
-                {{ __('Customer Management') }}
+                {{ __('manage_lang.Customer Management') }}
             </h3>
-            {{-- <p class="text-gray-700 dark:text-gray-300 mt-2">
-                Manage customer information  details.
-            </p> --}}
-            <a href="{{ route('customers.index') }}" class="btn btn-info" style="width: 300px; height: 40px;">
-                Go to Customer Management
+            <a href="{{ route('customers.index') }}" 
+                class="btn btn-info d-flex justify-content-center align-items-center" 
+                style="width: 200px; height: 50px;">
+                <img src="{{ asset('logo/cust.png') }}" alt="Icon" 
+                        style="width: 40px; height: 40px;">
             </a>
-            {{-- <a href="{{ route('tickets.index') }}" class="mt-4 inline-block bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
-                Go to Ticket Management
-            </a> --}}
         </div>
         <div class="p-6">
             <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200">
-                {{ __('Ticket Management') }}
+                {{ __('manage_lang.Ticket Management') }}
             </h3>
-            {{-- <p class="text-gray-700 dark:text-gray-300 mt-2">
-                Manage ticket information details.
-            </p> --}}
-            <a href="{{ route('tickets.index') }}" class="btn btn-primary" style="width: 300px; height: 40px;">
-                Go to Ticket Management
-            </a>           
+            <a href="{{ route('tickets.index') }}" 
+                class="btn btn-primary d-flex justify-content-center align-items-center" 
+                style="width: 200px; height: 50px;">
+                <img src="{{ asset('logo/ticket.png') }}" alt="Icon" 
+                        style="width: 40px; height: 40px;">
+            </a>
+          
         </div>
     </div>
+</div>
     <!-- End of Customer Management Card -->
 </div>
 </x-app-layout>

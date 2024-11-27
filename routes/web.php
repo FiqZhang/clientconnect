@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InteractionController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LanguageController;
 use App\Jobs\SendMail;
 use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\Mail;
@@ -13,12 +14,20 @@ use Illuminate\Support\Facades\Mail;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/translate', function () {
+    return view('testLocal');
+});
+
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-
+// Route::get('/dashboard/{locale?}', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard')->defaults('locale', 'en');
+// // Route::get('/dashboardlang', [DashboardController::class, 'change'])->name("change.lang");
+// Route::get('/dashboard/{locale}', [DashboardController::class, 'switchLocale'])->middleware(['auth', 'verified'])->name('dashboard.switchLocale');
+Route::get('lang', [LanguageController::class, 'change'])->name("change.lang");
+Route::get('/dashboard}', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+// // Route::get('/dashboardlang', [DashboardController::class, 'change'])->name("change.lang");
 
 Route::get('/management', function () {
     return view('management');
