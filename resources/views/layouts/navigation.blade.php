@@ -29,7 +29,7 @@
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                             @php($languages = ['en' => 'English', 'ms' => 'Malay'])
-                            <div>Language: {{ $languages[Session::get('locale', 'en')] }}</div>
+                            <div>{{ __('nav_lang.Language') }}: {{ $languages[Session::get('locale', 'en')] }}</div>
             
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -41,10 +41,10 @@
             
                     <x-slot name="content">
                         <x-dropdown-link :href="route('change.lang', ['lang' => 'en'])">
-                            English
+                            {{ __('nav_lang.English') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('change.lang', ['lang' => 'ms'])">
-                            Malay
+                            {{ __('nav_lang.Malay') }}
                         </x-dropdown-link>
                     </x-slot>
                 </x-dropdown>

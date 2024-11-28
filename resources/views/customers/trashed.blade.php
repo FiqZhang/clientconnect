@@ -1,29 +1,18 @@
 
 <x-app-layout>
-    <div class="container-fluid b" style="max-width: 1400px; margin: 0 auto;">
+    <div class="container-fluid" style="max-width: 1400px; margin: 0 auto;">
      
         
         <div class="container d-flex align-items-center justify-content-center mt-3" >
             <div>
-                <strong><h5>Customer Management</h5></strong>
+                <h5>Trashed Customer</h5>
             </div>
         </div>
-        
         <div class="container d-flex align-items-center justify-content-center mt-3 mb-3">
-            @can('create',  App\Models\Customer::class)
-            <a href="{{ route('customers.create') }}" class="btn btn-primary me-2">Create</a>
+            {{-- @can('create',  App\Models\Customer::class)
+            <a href="{{ route('customers.create') }}" class="btn btn-primary me-2">Add Customer</a>
             @endcan
-
-            <a href="{{ route('management') }}"  class="btn btn-outline-primary">
-                <i class="bi bi-arrow-return-left"></i> Return
-            </a>
-
-            <a href="{{ route('customers.trashed') }}" class=" d-flex justify-content-center align-items-center" style="width: 50px; height: 40px;"><img src="{{ asset('logo/delete.png') }}" alt="Icon" style="width: 30px; height: 30px;"></a>
-
-            <a href="{{ request()->fullUrlWithQuery(['generate-pdf' => true]) }}" class=" d-flex justify-content-center align-items-center me-2" style="width: 50px; height: 40px;"><img src="{{ asset('logo/pdf.png') }}" alt="Icon" style="width: 30px; height: 30px;"></a>
-            
-        
-            
+            <a href="{{ request()->fullUrlWithQuery(['generate-pdf' => true]) }}" class="btn btn-primary me-2">Generate PDF</a> --}}
         </div>
 
         <form action="{{ route('customers.index') }}">
@@ -50,6 +39,11 @@
                 </tr>
             </thead>
             <tbody>
+                @if ($customers->isEmpty())
+                <tr>
+                    <td colspan="7" class="text-center">No customers found.</td>
+                </tr>
+            @else
                 @foreach ($customers as $customer)
                     <tr>
                         <td>{{ $customer->id_number }}</td>
@@ -59,27 +53,27 @@
                         <td >{{ $customer->address }}</td>
                         <td>{{ $customer->notes }}</td>
                         <td>
-                            <a href="{{ route('customers.edit', $customer) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('customers.destroy', $customer) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                @can('delete', $customer)
-                                <button type="submit" class="btn btn-danger btn-sm mt-1 mb-1" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
-                                @endcan
-                            </form>
-                            <a href="{{ route('customers.interactions.index', $customer) }}" class="btn btn-secondary btn-sm ">Interaction<br>Tracking</a>
+                            <a href="{{ route('customers.restore', $customer->id) }}" class="btn btn-warning btn-sm">Restore</a>
                         </td>                        
                     </tr>
                 @endforeach
+            @endif
             </tbody>
         </table>
+        <div class="d-flex justify-content-center mt-5">
+            <a href="{{ route('customers.index') }}"  class="btn btn-outline-primary">
+                <i class="bi bi-arrow-return-left"></i> Return
+            </a>
+            </div>
+        
     </div>
       
     <div class="container">
         <div class="row justify-content-center ">
           <div class="col-3">
-            <div class="">{{ $customers->links('pagination::bootstrap-5') }}</div>
+            <div >{{ $customers->links('pagination::bootstrap-5') }}</div>
           </div>
         </div>
+      </div>
 
 </x-app-layout>

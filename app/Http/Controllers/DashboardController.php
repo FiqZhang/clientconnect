@@ -21,7 +21,7 @@ class DashboardController extends Controller
         ->with('customer')
         ->take(5)
         ->get(); 
-        $pendingFollowUps = Ticket::where('status', 'in_progress')->count();
+        $pendingFollowUps = Ticket::where('status', 'in progress')->count();
         $activeTickets = Ticket::where('status', 'open')->count();
         $ticketStatuses = Ticket::select('status', DB::raw('count(*) as count'))
                                 ->groupBy('status')

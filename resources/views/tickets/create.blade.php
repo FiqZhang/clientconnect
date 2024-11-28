@@ -25,7 +25,7 @@
             <label for="status" class="form-label">Status</label>
             <select name="status" id="status" class="form-select" required>
                 <option value="open">Open</option>
-                <option value="in_progress">In Progress</option>
+                <option value="in progress">In Progress</option>
                 <option value="resolved">Resolved</option>
                 <option value="closed">Closed</option>
             </select>

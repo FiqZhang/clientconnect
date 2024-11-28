@@ -46,7 +46,7 @@
 <body>
 
 <div class="container-fluid">
-    <h5 class="text-center">Customer Management</h5>
+    <h5 class="text-center">Customer List</h5>
 
     <table class="table">
         <thead>

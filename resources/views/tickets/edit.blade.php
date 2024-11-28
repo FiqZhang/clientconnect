@@ -1,6 +1,13 @@
 <x-app-layout>
-    <div class="container">
-        <strong> <h1>Edit Ticket</h1> </strong>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx" crossorigin="anonymous">
+    
+    <div class="container-fluid" style="max-width: 1000px; margin: 0 auto;">
+        
+        <div class="container d-flex align-items-center justify-content-center mt-3" >
+            <div>
+                <strong><h5>Edit Ticket</h5></strong>
+            </div>
+        </div>
         
         <form action="{{ route('tickets.update', $ticket) }}" method="POST">
                 @csrf
@@ -26,7 +33,7 @@
                     <label for="status" class="form-label">Status</label>
                     <select name="status" id="status" class="form-select" required>
                         <option value="open" {{ $ticket->status == 'open' ? 'selected' : '' }}>Open</option>
-                        <option value="in_progress" {{ $ticket->status == 'in_progress' ? 'selected' : '' }}>In Progress</option>
+                        <option value="in progress" {{ $ticket->status == 'in progress' ? 'selected' : '' }}>In Progress</option>
                         <option value="resolved" {{ $ticket->status == 'resolved' ? 'selected' : '' }}>Resolved</option>
                         <option value="closed" {{ $ticket->status == 'closed' ? 'selected' : '' }}>Closed</option>
                     </select>
@@ -67,10 +74,20 @@
                         {{ session('error') }}
                     </div>
                 @endif
-         
+                    
+                @if (session('success'))
+                <div id="success-message" class="alert alert-success" style="display: none;">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             </div>
             <div class="d-flex justify-content-center mt-5">
-                <button type="submit" class="btn btn-primary ">Update Ticket</button>
+                <button type="submit" class="btn btn-primary me-2">Update Ticket</button>
+                <a href="{{ route('tickets.index') }}"  class="btn btn-outline-primary">
+                    <i class="bi bi-arrow-return-left"></i> Return
+                </a>
+                
             </div>
         </form>
     </div>

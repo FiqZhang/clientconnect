@@ -21,7 +21,7 @@ class TicketFactory extends Factory
             'assigned_to' => User::factory(), // Generates a new user if not provided
             'title' => $faker->sentence(), // Use Malaysian locale for title
             'description' => $faker->paragraph(), // Use Malaysian locale for description
-            'status' => $this->faker->randomElement(['open', 'in_progress', 'resolved', 'closed']), // Random status
+            'status' => $this->faker->randomElement(['open', 'in progress', 'resolved', 'closed']), // Random status
             'priority' => $this->faker->randomElement(['low', 'medium', 'high']), // Random priority
             'created_at' => now(),
             'updated_at' => now(),

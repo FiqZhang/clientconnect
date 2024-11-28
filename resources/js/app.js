@@ -1,4 +1,5 @@
 import './bootstrap';
+import './success-message.js';
 
 import Alpine from 'alpinejs';
 

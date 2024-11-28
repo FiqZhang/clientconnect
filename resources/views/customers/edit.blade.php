@@ -2,8 +2,13 @@
 
         <!-- Include this where you want the success message to appear -->
 
-    <div class="container">
-        <h1>Edit Customer</h1>
+    <div class="container-fluid" style="max-width: 1000px; margin: 0 auto;">
+        <div class="container d-flex align-items-center justify-content-center mt-3" >
+            <div>
+                <strong><h5>Edit Customer</h5></strong>
+            </div>
+        </div>
+
         <form action="{{ route('customers.update', $customer) }}" method="POST">
             @csrf
             @method('PUT')
@@ -32,33 +37,22 @@
                 <textarea name="notes" id="notes" class="form-control" rows="3">{{ $customer->notes }}</textarea>
             </div>
             @if (session('success'))
-        <div id="success-message" class="alert alert-success" style="display: none;">
-            {{ session('success') }}
-        </div>
-    @endif
+                <div id="success-message" class="alert alert-success" style="display: none;">
+                    {{ session('success') }}
+                </div>
+            @endif
 
             @can('update', $customer)
             <button type="submit" class="btn btn-primary">Update Customer</button>
             @endcan
-            <a href="{{ route('customers.index') }}" class="btn btn-secondary">Cancel</a>
+
+            <div class="d-flex justify-content-center mt-5">
+            <a href="{{ route('customers.index') }}"  class="btn btn-outline-primary">
+                <i class="bi bi-arrow-return-left"></i> Return
+            </a>
+            </div>
+            
         </form>
     </div>
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        // Check if the success message container exists
-        if ($('#success-message').length) {
-            // Display the message
-            $('#success-message').fadeIn();
-
-            // Auto-hide after 3 seconds (optional)
-            setTimeout(function () {
-                $('#success-message').fadeOut();
-            }, 3000);
-        }
-    });
-</script>
-
 
 </x-app-layout>

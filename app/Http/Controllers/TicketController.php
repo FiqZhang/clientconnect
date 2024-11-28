@@ -36,11 +36,15 @@ class TicketController extends Controller
         //     });
         // })
         $tickets = Ticket::with(['customer', 'assignedUser'])
+    ->whereHas('customer', function ($query) {
+        $query->whereNull('deleted_at'); 
+    })
     ->when($request->filled('status'), function ($query) use ($request) {
         $query->where('status', $request->query('status'));
     })
     ->when($request->filled('bulan'), function ($query) {
         $query->whereMonth('created_at', request()->query('bulan'));
+    
     })->paginate(10);
           
         // dd($tickets);
@@ -82,7 +86,7 @@ class TicketController extends Controller
             'customer_id' => 'required|exists:customers,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'status' => 'required|in:open,in_progress,resolved,closed',
+            'status' => 'required|in:open,in progress,resolved,closed',
             'priority' => 'required|in:low,medium,high',
             'assigned_to' => 'nullable|exists:users,id',
             'file' => 'required',
@@ -131,14 +135,14 @@ class TicketController extends Controller
             'customer_id' => 'required|exists:customers,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'status' => 'required|in:open,in_progress,resolved,closed',
+            'status' => 'required|in:open,in progress,resolved,closed',
             'priority' => 'required|in:low,medium,high',
             'assigned_to' => 'nullable|exists:users,id',
         ]);
 
         $ticket->update($request->all());
 
-        return redirect()->route('tickets.index')->with('success', 'Ticket updated successfully.');
+        return back()->with('success', 'Ticket updated successfully.');
     }
 
     public function destroy(Ticket $ticket)
