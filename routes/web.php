@@ -11,9 +11,18 @@ use App\Jobs\SendMail;
 use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\Mail;
 
+// // Catch-all route to serve the React app
+// Route::get('/{any}', function () {
+//     return file_get_contents(public_path('index.html'));
+// })->where('any', '.*');
+
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+
 Route::get('/translate', function () {
     return view('testLocal');
 });
@@ -62,4 +71,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 require __DIR__.'/customer.php';
 require __DIR__.'/ticket.php';
+require __DIR__.'/api.php';
+require __DIR__.'/react.php';
+
 
